@@ -1,3 +1,8 @@
+#loop through each tweet 
+#break the text into tokens
+#lookup the token in the sentiment hash
+#if it exists add it to the overall sentiment of the tweet, else continue to next token
+
 import sys
 import json
 
@@ -5,9 +10,25 @@ class Tweet:
     def __init__(self, tweet_data):
         self.data = tweet_data
 
+    #Extract the text field from the raw data
     def text(self):
-        text = self.data['text'].encode('utf-8')
+        text = ""
+        if 'text' in self.data:
+            text = self.data['text'].encode('utf-8')
         return text
+    
+    #Split the text into tokens
+    def tokens(self):
+        return self.text().split()
+    
+    #aggregate for each token
+    #sentiment value or 0
+    def score(self, sentiments):
+        sentiment_score = 0
+        for token in self.tokens():
+            if token in sentiments:
+                sentiment_score += sentiments[token]        
+        return sentiment_score    
 
 
 def main():
@@ -19,16 +40,10 @@ def main():
         term, score  = sentiment.split("\t")  # The file is tab-delimited. "\t" means "tab character"
         sentiments[term] = int(score)  # Convert the score to an integer.
 
-    count = 1
-    tweets = {}
     for tweet in tweet_file:
         t = Tweet(json.loads(tweet))
-        tweets[count] = t
-        count += 1
-        print t.text()
+        print t.score(sentiments)
 
-    print len(sentiments) # Print every (term, score) pair in the dictionary
-    print len(tweets) #
 
 if __name__ == '__main__':
     main()
