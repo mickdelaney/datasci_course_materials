@@ -1,0 +1,18 @@
+SELECT   docid, sum(count(*)) 
+FROM     frequency
+WHERE 	 (term = 'washington' OR term = 'washington' OR term = 'washington')
+GROUP BY docid
+ORDER BY sum(count(*)) 	
+
+UNION
+SELECT 'q' as docid, 'washington' as term, 1 as count 
+UNION
+SELECT 'q' as docid, 'taxes' as term, 1 as count
+UNION 
+SELECT 'q' as docid, 'treasury' as term, 1 as count
+
+SELECT   docid, count(*) 
+FROM     frequency
+WHERE 	 (term = 'washington' OR term = 'washington' OR term = 'washington')
+GROUP BY docid
+ORDER BY count(*) DESC

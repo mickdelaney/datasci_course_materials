@@ -1,0 +1,33 @@
+reuters.db as term-document matrix (sparse matrix)
+     
+1000_tx_earn 	available 	1
+10423_txt_acq 	available 	1
+10784_txt_acq	available	1
+
+
+
+		available	
+1000_tx_earn	1
+10423_txt_acq	1 
+10784_txt_acq	1
+10794_txt_acq	-empty-
+
+Similarity of documents means, how many words do they share? 
+
+
+SELECT   f1.docid, f2.docid, sum(f1.count * f2.count) 
+FROM     Frequency f1, Frequency f2 
+WHERE    f1.term = f2.term    
+AND      f1.docid = "10080_txt_crude" 
+AND      f2.docid = "17035_txt_earn"
+GROUP BY f1.docid, f2.docid
+
+SELECT * FROM frequency
+UNION
+SELECT 'q' as docid, 'washington' as term, 1 as count 
+UNION
+SELECT 'q' as docid, 'taxes' as term, 1 as count
+UNION 
+SELECT 'q' as docid, 'treasury' as term, 1 as count
+
+

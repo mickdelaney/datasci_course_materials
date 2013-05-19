@@ -1,0 +1,17 @@
+multiply the 2 tables.
+
+A x B
+
+match the correct columns together.
+i.e. where col_num = col_num & row_num = row_num
+
+A ROW 0, COL 4
+B ROW 0, COL 4
+
+0, 0, 0, 4
+
+SELECT 	row_num, col_num, value
+FROM 	a
+UNION
+SELECT 	row_num, col_num, value
+FROM 	b
